@@ -15,6 +15,10 @@ page = st.sidebar.radio("Navigate", ["📖 Notebook", "📂 Summarization", "⚙
 st.sidebar.subheader("🔑 API Configuration")
 openai_api_key = st.sidebar.text_input("Enter OpenAI API Key", type="password")
 
+# Sidebar - Model Selection
+st.sidebar.subheader("🤖 Model Selection")
+model_choice = st.sidebar.selectbox("Choose a model", ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"])
+
 # Sidebar - Extra Info
 st.sidebar.markdown("---")
 st.sidebar.markdown("💡 **Notebook LM** is an AI-powered assistant for writing, summarizing, and note-taking.")
@@ -26,7 +30,7 @@ def generate_response(prompt):
         return None
 
     try:
-        model = ChatOpenAI(temperature=0.7, api_key=openai_api_key)
+        model = ChatOpenAI(temperature=0.7, api_key=openai_api_key, model_name=model_choice)
         response = model.invoke(prompt)
         return response.content.strip()
 
@@ -108,4 +112,3 @@ elif page == "⚙️ Settings":
 
     if st.button("Save Settings"):
         st.success("✅ Settings saved!")
-
